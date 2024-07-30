@@ -6,7 +6,7 @@ from tqdm import tqdm
 from assets import DQNAgent, device
 
 def main(args):
-    env = gym.make('LunarLander-v2', render_mode='human')
+    env = gym.make('LunarLander-v2', render_mode=None)
     state_size = env.observation_space.shape[0]
     
     if isinstance(env.action_space, gym.spaces.Discrete):

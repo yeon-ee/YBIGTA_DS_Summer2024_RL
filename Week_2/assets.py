@@ -31,29 +31,33 @@ DQN은 nn.Module을 상속받아 구현하시면 됩니다. 필요한 메소드�
 
 ####### 여기서부터 코드를 작성하세요 #######
 # ReplayMemory 클래스를 구현해주세요!
-class ReplayMemory:
+class ReplayMemory(object):
+
     def __init__(self, capacity):
-        pass
+        self.memory = deque([], maxlen=capacity)
 
     def push(self, *args):
-        """Transition 저장"""
-        pass
+        """transition 저장"""
+        self.memory.append(Transition(*args))
 
     def sample(self, batch_size):
-        pass
+        return random.sample(self.memory, batch_size)
 
     def __len__(self):
-        pass
+        return len(self.memory)
     
 
 # DQN 모델을 구현해주세요! Atari Game에선 CNN 모듈을 사용하지만, 구현은 간단하게 MLP로 해도 됩니다. 성능을 비교해보며 자유로이 구현해보세요! 
 class DQN(nn.Module):
     def __init__(self, n_observations, n_actions):
         super(DQN, self).__init__()
-        pass
-
+        self.layer1 = nn.Linear(n_observations, 128)
+        self.layer2 = nn.Linear(128, 128)
+        self.layer3 = nn.Linear(128, n_actions)
     def forward(self, x):
-        pass
+        x = F.relu(self.layer1(x))
+        x = F.relu(self.layer2(x))
+        return self.layer3(x)
 
 ####### 여기까지 코드를 작성하세요 #######
 
